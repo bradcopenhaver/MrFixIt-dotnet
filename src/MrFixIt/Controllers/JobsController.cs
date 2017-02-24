@@ -48,5 +48,26 @@ namespace MrFixIt.Controllers
             db.SaveChanges();
             return Json(thisJob);
         }
+
+        [HttpPost]
+        public IActionResult StartJob(int jobId)
+        {
+            Job thisJob = db.Jobs.FirstOrDefault(j => j.JobId == jobId);
+            thisJob.Pending = true;
+            db.Entry(thisJob).State = EntityState.Modified;
+            db.SaveChanges();
+            return Json(thisJob);
+        }
+
+        [HttpPost]
+        public IActionResult CompleteJob(int jobId)
+        {
+            Job thisJob = db.Jobs.FirstOrDefault(j => j.JobId == jobId);
+            thisJob.Pending = false;
+            thisJob.Completed = true;
+            db.Entry(thisJob).State = EntityState.Modified;
+            db.SaveChanges();
+            return Json(thisJob);
+        }
     }
 }

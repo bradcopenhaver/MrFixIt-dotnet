@@ -9,20 +9,86 @@
 {
 
     <div class="text-center">
-        <h4>Hello Worker @Model.FirstName @Model.LastName. You are Logged In</h4>
+        <h4>Hello @Model.FirstName @Model.LastName. You are Logged In</h4>
         <h3>Your Current Jobs:</h3>
         @foreach (var Job in Model.Jobs)
         {
-            <h5>@Job.Title</h5>
+            <div id="result-@Job.JobId" class="panel panel-default">
+                <h5>@Job.Title</h5>
+                @if (Job.Completed)
+                {
+                    <p>This job is complete.</p>
+                }
+                else if (@Job.Pending)
+                {
+                    <button id="@Job.JobId" class="completeButton">Complete this job.</button>
+                }
+                else
+                {
+                    <button id="@Job.JobId" class="startButton btn">Begin work on this job.</button>      
+                }
+            </div>
 
         }
-        @if (Model.Avaliable)
+        @if (Model.Jobs.Count < 5)
         {
-            <h2>Please @Html.ActionLink("select a job", "Index", "Jobs").</h2>
+            <h3>@Html.ActionLink("Claim an available job", "Index", "Jobs").</h3>
         }
         else
         {
-            <p>You are already assigned to a job.</p>
+            <p>You already claimed 5 jobs. Comlete some of those jobs before you claim a new one.</p>
         }
     </div>
 }
+
+<script type="text/javascript">
+    $(document).ready(function () {
+        $(".startButton").click(function () {
+            var clickedId = $(this).attr('id');
+            $.ajax({
+                url: '@Url.Action("StartJob", "Jobs")',
+                type: 'POST',
+                dataType: 'json',
+                data: { jobId: clickedId },
+                success: function (result) {
+                    console.log(result);
+                    $('#result-' + clickedId).html(
+                        "<h5>" + result.title + "</h5><button id=" + result.jobId + " class='completeButton'>Complete this job.</button>"
+                    );
+                    $(".completeButton").last().click(function () {
+                        var clickedId = $(this).attr('id');
+                        $.ajax({
+                            url: '@Url.Action("CompleteJob", "Jobs")',
+                            type: 'POST',
+                            dataType: 'json',
+                            data: { jobId: clickedId },
+                            success: function (result) {
+                                console.log(result);
+                                $('#result-' + clickedId).html(
+                                    "<h5>" + result.title + "</h5><p>This job is complete.</p>"
+                                );
+                            }
+                        })
+                    })
+                }
+            })
+        })
+
+        $(".completeButton").click(function () {
+            var clickedId = $(this).attr('id');
+            $.ajax({
+                url: '@Url.Action("CompleteJob", "Jobs")',
+                type: 'POST',
+                dataType: 'json',
+                data: { jobId: clickedId },
+                success: function (result) {
+                    console.log(result);
+                    $('#result-' + clickedId).html(
+                        "<h5>" + result.title + "</h5><p>This job is complete.</p>"
+                    );
+                }
+            })
+        })
+
+    });
+</script>
