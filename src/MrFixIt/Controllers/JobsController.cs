@@ -17,7 +17,7 @@ namespace MrFixIt.Controllers
         // GET: /<controller>/
         public IActionResult Index()
         {
-            return View(db.Jobs.Include(i => i.Worker).ToList());
+            return View(db.Jobs.Include(i => i.Worker).Where(j => j.Completed == false).ToList());
         }
 
         public IActionResult Create()

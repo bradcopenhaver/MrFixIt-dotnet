@@ -29,21 +29,23 @@
                     </li>
                     <li>
                         @Html.ActionLink("Hire Us", "Index", "Jobs")
-                    </li>
+                    </li>  
+                </ul>
+                <ul class="nav navbar-nav navbar-right">
                     @if (User.Identity.IsAuthenticated)
                     {
                         <li>
                             @Html.ActionLink("Worker Dashboard", "Index", "Workers")
                         </li>
-                    }
-
-                    @if (User.Identity.IsAuthenticated)
-                    {
                         <li>
                             @Html.ActionLink("Log Out", "LogOff", "Account")
                         </li>
                     }
-
+                    else
+                    {
+                        <li>@Html.ActionLink("Register", "Register", "Account")</li>
+                        <li>@Html.ActionLink("Login", "Login", "Account")</li>
+                    }
                 </ul>
             </div>
         </div>
