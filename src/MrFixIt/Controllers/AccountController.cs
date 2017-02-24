@@ -28,11 +28,6 @@ namespace MrFixIt.Controllers
             _db = db;
         }
 
-        //public IActionResult Index()
-        //{
-        //    return View();
-        //}
-
         public IActionResult Index()
         {
             if (User.Identity.IsAuthenticated)
@@ -59,7 +54,8 @@ namespace MrFixIt.Controllers
             IdentityResult result = await _userManager.CreateAsync(user, model.Password);
             if (result.Succeeded)
             {
-                return RedirectToAction("Index");
+                await _signInManager.SignInAsync(user, isPersistent: true);
+                return RedirectToAction("Index", "Workers");
             }
             else
             {

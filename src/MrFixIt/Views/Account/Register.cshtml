@@ -6,18 +6,28 @@
 
 @model RegisterViewModel
 
-<h2>Register a new worker</h2>
+<h2>Register as a new worker</h2>
 <hr />
-@using (Html.BeginForm("Register", "Account", FormMethod.Post))
-{
-    @Html.LabelFor(m => m.Email)
-    @Html.TextBoxFor(m => m.Email)
+<div class="row">
+    <div class="col-sm-5">
+        @using (Html.BeginForm("Register", "Account", FormMethod.Post))
+        {
+            <div class="form-group">
+                <label asp-for="Email"></label>
+                <input class="form-control" asp-for="Email" />
+            </div>
 
-    @Html.LabelFor(m => m.Password)
-    @Html.PasswordFor(m => m.Password)
+            <div class="form-group">
+                <label asp-for="Password"></label>
+                <input class="form-control" asp-for="Password" />
+            </div>
 
-    @Html.LabelFor(m => m.ConfirmPassword)
-    @Html.PasswordFor(m => m.ConfirmPassword)
+            <div class="form-group">
+                <label asp-for="ConfirmPassword">Confirm Password</label>
+                <input class="form-control" asp-for="ConfirmPassword" />
+            </div>
 
-    <input type="submit" value="Register" />
-}
+            <input type="submit" value="Register" class="btn"/>
+        }
+    </div>
+</div>

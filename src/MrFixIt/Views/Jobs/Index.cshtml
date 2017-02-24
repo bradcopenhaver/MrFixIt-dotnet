@@ -17,7 +17,7 @@
     {
         @if (User.Identity.IsAuthenticated)
         {
-            <p><span id="result-@Job.JobId"><button id="@Job.JobId" class="claimButton">Claim this Job</button></span></p>
+            <p><span id="result-@Job.JobId"><button id="@Job.JobId" class="claimButton btn">Claim this Job</button></span></p>
         }
         else
         {

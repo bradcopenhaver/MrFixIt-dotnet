@@ -7,15 +7,25 @@
 
 @model MrFixIt.Models.Job
 
-    <h2>Create new Job</h2>
-        <hr />
+<h2>Create new Job</h2>
+<hr />
+<div class="row">
+    <div class="col-sm-5">
         <h4>Add a new job</h4>
         @using (Html.BeginForm())
         {
-            @Html.LabelFor(model => model.Title)
-            @Html.TextBoxFor(model => model.Title, new { @required = "true" })
-            @Html.LabelFor(model => model.Description)
-            @Html.TextBoxFor(model => model.Description, new { @required = "true" })
-            <input type="submit" value="Add new job" />
+            <div class="form-group">
+                <label>Title:</label>
+                <input class="form-control" asp-for="Title" required />
+            </div>
+
+            <div class="form-group">
+                <label>Description of job:</label>
+                <input class="form-control" asp-for="Description" required />
+            </div>
+
+            <input type="submit" value="Add new job" class="btn" />
         }
         <p>@Html.ActionLink("Back to list", "Index")</p>
+    </div>
+</div>

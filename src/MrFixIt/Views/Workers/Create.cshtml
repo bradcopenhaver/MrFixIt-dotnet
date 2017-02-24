@@ -7,29 +7,27 @@
 @using System.Security.Claims
 @model MrFixIt.Models.Worker
 
-<html>
-<head>
-    <title>Create</title>
-</head>
-<body>
-    <h2>Create</h2>
-    <hr />
-    @if (User.Identity.IsAuthenticated)
-    {
-        <h4>You do not have a complete worker profile. Please create your worker profile</h4>
-        @using (Html.BeginForm())
+<h2>Create</h2>
+<hr />
+<h4>You do not have a complete worker profile. Please create your worker profile</h4>
+<div class="row">
+    <div class="col-sm-5">
+        @if (User.Identity.IsAuthenticated)
         {
-            @Html.LabelFor(model => model.FirstName)
-            @Html.TextBoxFor(model => model.FirstName)
-            @Html.LabelFor(model => model.LastName)
-            @Html.TextBoxFor(model => model.LastName)
+            @using (Html.BeginForm())
+            {
+                <div class="form-group">
+                    <label>First Name:</label>
+                    <input class="form-control" asp-for="FirstName" />
+                </div>
 
+                <div class="form-group">
+                    <label>Last Name:</label>
+                    <input class="form-control" asp-for="LastName" />
+                </div>
 
-            <input type="submit" value="Register" />
+                <input type="submit" value="Register" class="btn" />
+            }
         }
-    }
-
-
-
-</body>
-</html>
+    </div>
+</div>
