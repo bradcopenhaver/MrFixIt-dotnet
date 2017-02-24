@@ -14,7 +14,7 @@
         
     @if (Job.Worker == null)
     {
-        <p><span id="@Job.JobId+result"><button id="@Job.JobId" class="claimButton">Claim this Job</button></span></p>
+        <p><span id="result-@Job.JobId"><button id="@Job.JobId" class="claimButton">Claim this Job</button></span></p>
     }
     else
     {
@@ -36,7 +36,7 @@
                 success: function (result) {
                     console.log(result);
                     var outputHtml = 
-                    $('#'+ clickedId+ '+result' ).text("This job is claimed by "+ result.worker.firstName +" "+result.worker.lastName);
+                    $('#result-'+ clickedId).text("This job is claimed by "+ result.worker.firstName +" "+result.worker.lastName);
                 }
 
             })
