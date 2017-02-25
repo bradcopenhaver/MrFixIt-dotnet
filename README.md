@@ -25,6 +25,7 @@ None documented right now, but I'm sure there are plenty.
 
 * Add better styling overall.
 * Add User Roles so that users who only want to post a job don't have to register as a worker.
+* Enforce Authorization at the controller level.
 
 ## Support and contact details
 
