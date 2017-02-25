@@ -8,30 +8,42 @@
     <h3>Our Current Jobs</h3>
     @Html.ActionLink("Add a new job", "Create")
 </div>
-@foreach (var Job in Model)
-{    
-    <h4>@Job.Title</h4>        
-    <h5>@Job.Description</h5>
-        
-    @if (Job.Worker == null)
+<div class="job-container">
+    @foreach (var Job in Model)
     {
-        @if (User.Identity.IsAuthenticated)
+        @if (Job.Worker == null)
         {
-            <p><span id="result-@Job.JobId"><button id="@Job.JobId" class="claimButton btn">Claim this Job</button></span></p>
+            <div class="panel panel-info job-panel">
+                <div class="panel-heading">
+                    <h4><strong>@Job.Title</strong></h4>
+                </div>
+                <div class="panel-body">
+                    <h5>@Job.Description</h5>
+                    @if (User.Identity.IsAuthenticated)
+                    {
+                        <p><span id="result-@Job.JobId"><button id="@Job.JobId" class="claimButton btn">Claim this Job</button></span></p>
+                    }
+                    else
+                    {
+                        <p>This Job is unclaimed.</p>
+                    }
+                </div>
+            </div>
         }
         else
         {
-            <p>This Job is unclaimed.</p>
+            <div class="panel panel-default job-panel">
+                <div class="panel-heading">
+                    <h4><strong>@Job.Title</strong></h4>
+                </div>
+                <div class="panel-body">
+                    <h5>@Job.Description</h5>
+                    <p>This Job is claimed by @Job.Worker.FirstName @Job.Worker.LastName</p>                    
+                </div>
+            </div>
         }
     }
-    else
-    {
-        <p>This Job is claimed by @Job.Worker.FirstName @Job.Worker.LastName</p>
-
-    }
-    <hr />
-}
-
+</div>
 <script type="text/javascript">
     $(document).ready(function () {
         $(".claimButton").click(function () {
@@ -43,8 +55,8 @@
                 data: { jobId: clickedId },
                 success: function (result) {
                     console.log(result);
-                    var outputHtml = 
-                    $('#result-'+ clickedId).text("This job is claimed by "+ result.worker.firstName +" "+result.worker.lastName);
+                    var outputHtml =
+                    $('#result-' + clickedId).text("This job is claimed by " + result.worker.firstName + " " + result.worker.lastName);
                 }
             })
         })

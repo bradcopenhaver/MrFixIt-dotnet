@@ -12,39 +12,52 @@
     <div class="text-center">
         <h4>Hello @Model.FirstName @Model.LastName. You are Logged In</h4>
         <h3>Your Current Jobs:</h3>
+    </div>
+    <div class="job-container">
         @foreach (var Job in Model.Jobs)
-        {
-                            
+        {                            
             @if (Job.Completed)
             {
             }
             else if (@Job.Pending)
             {
                 unfinishedJobs++;
-                <div id="result-@Job.JobId" class="panel panel-default">
-                    <h5>@Job.Title</h5>
-                    <button id="@Job.JobId" class="completeButton btn">Complete this job.</button>
+                <div id="result-@Job.JobId" class="job-panel">
+                    <div class="panel panel-success">
+                        <div class="panel-heading">
+                            <h4><strong>@Job.Title</strong></h4>
+                        </div>
+                        <div class="panel-body">
+                            <button id="@Job.JobId" class="completeButton btn">Complete this job.</button>
+                        </div>
+                    </div>
                 </div>
             }
             else
             {
                 unfinishedJobs++;
-                <div id="result-@Job.JobId" class="panel panel-default">
-                    <h5>@Job.Title</h5>
-                    <button id="@Job.JobId" class="startButton btn">Begin work on this job.</button>
+                <div id="result-@Job.JobId" class="job-panel">
+                    <div class="panel panel-info">
+                        <div class="panel-heading">
+                            <h4><strong>@Job.Title</strong></h4>
+                        </div>
+                        <div class="panel-body">
+                            <button id="@Job.JobId" class="startButton btn">Begin work on this job.</button>
+                        </div>
+                    </div>
                 </div>
             }
         }
-
-        @if (unfinishedJobs < 5)
-        {
-            <h3>@Html.ActionLink("Claim an available job", "Index", "Jobs").</h3>
-        }
-        else
-        {
-            <p>You already claimed 5 jobs. Comlete some of those jobs before you claim a new one.</p>
-        }
     </div>
+
+    @if (unfinishedJobs < 5)
+    {
+        <h3>@Html.ActionLink("Claim an available job", "Index", "Jobs").</h3>
+    }
+    else
+    {
+        <p>You already claimed 5 jobs. Comlete some of those jobs before you claim a new one.</p>
+    }
 }
 
 <script type="text/javascript">
@@ -59,7 +72,7 @@
                 success: function (result) {
                     console.log(result);
                     $('#result-' + clickedId).html(
-                        "<h5>" + result.title + "</h5><button id=" + result.jobId + " class='completeButton'>Complete this job.</button>"
+                        "<div class='panel panel-success'><div class='panel-heading'><h4><strong>" + result.title + "</strong></h4></div><div class='panel-body'><button id="+result.jobId+" class='completeButton btn'>Complete this job.</button></div></div>"
                     );
                     $(".completeButton").last().click(function () {
                         var clickedId = $(this).attr('id');
@@ -71,7 +84,7 @@
                             success: function (result) {
                                 console.log(result);
                                 $('#result-' + clickedId).html(
-                                    "<h5>" + result.title + "</h5><p>This job is complete.</p>"
+                                    "<div class='panel panel-success'><div class='panel-heading'><h4><strong>" + result.title + "</strong></h4></div><div class='panel-body'><p>This job is complete.</p></div></div>"
                                 );
                             }
                         })
@@ -90,7 +103,7 @@
                 success: function (result) {
                     console.log(result);
                     $('#result-' + clickedId).html(
-                        "<h5>" + result.title + "</h5><p>This job is complete.</p>"
+                        "<div class='panel panel-success'><div class='panel-heading'><h4><strong>" + result.title + "</strong></h4></div><div class='panel-body'><p>This job is complete.</p></div></div>"
                     );
                 }
             })

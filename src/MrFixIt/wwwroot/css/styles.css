@@ -1,4 +1,14 @@
 ﻿body {
     padding-top: 70px;
-    color: navy;
+}
+.job-container{
+    display:flex;
+    flex-direction:row;
+    flex-wrap: wrap;
+    justify-content: center;
+    align-items: center;
+}
+.job-panel{
+    width: 300px;
+    margin: 10px;
 }
